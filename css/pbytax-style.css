@@ -1,0 +1,21 @@
+ul.pbytax-list {
+	list-style:none;
+	padding-left:0;
+}
+ul.pbytax-list li.pbytax-item {
+	clear:both;	
+	margin-bottom:10px;
+}
+ul.pbytax-list li.pbytax-item .pbytax-thumb {
+	float:left;	
+	margin-right:6px;
+}
+
+ul.pbytax-list li.pbytax-item .pbytax-thumb img {
+	max-width:60px;
+	max-height:auto;
+}
+
+ul.pbytax-list li.pbytax-item .pbytax-excerpt {
+	line-height:1;
+}
