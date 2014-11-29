@@ -86,10 +86,16 @@ for any question and for bug reports, please use the [support forum](http://word
 
 == Changelog ==
 
+= 1.0.1 =
+* Updated readme.txt
+
 = 1.0 =
 * First version available to public
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+* Updated readme.txt
 
 = 1.0 =
 First version available to public
