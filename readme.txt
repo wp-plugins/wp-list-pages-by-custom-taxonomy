@@ -3,12 +3,12 @@ Contributors: piccart
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VUF3KP7YFAVZG
 Tags: listing, recent posts, taxonomy, post type, widget
 Requires at least: 3.2
-Tested up to: 4.0
+Tested up to: 4.0.1
 Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Widget that lists XX posts of any active post-type, filtering by any term of any active custom taxonomy, display title, or thumb and excerpt too.
+Widget that lists XX posts of any active post-type, filtering by any term of any active custom taxonomy. display title, or thumb and excerpt too.
 
 == Description ==
 
@@ -35,7 +35,7 @@ the main features of the widget are:
 *   Exclude specific posts/pages from the listing
 
 Also, the plugin is structured to allow *easy overriding of the output template*. 
-Just duplicate the file pbytax-template.php that you'll find within the plugin folder, and put it in your theme folder.
+Just duplicate the file pbytax-template.php that you'll find within the plugin subfolder "templates", and put it in your theme folder.
 
 the widget is built with a very little css styling, in order to adapt perfectly in any theme. though, if you want to style it up, all the html elements have been named with specific classes, to allow easy targetting in your css file.
 
@@ -43,7 +43,7 @@ the widget is built with a very little css styling, in order to adapt perfectly 
 if you'd like me to add a new feature to the widget, please let me know by writing a post in the [support forum](http://wordpress.org/support/plugin/wp-list-pages-by-custom-taxonomy) , and hopefully I will add it to the next version of *WP List Pages by Custom Taxonomy*.
 
 
-If this plugin has been helpful for you, please don't forget to *review* it and consider to *make a donation*. Don't be shy, a couple of dollars would still make me happy! :)
+If this plugin has been helpful for you, please don't forget to *review* it and consider to [make a donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VUF3KP7YFAVZG). Don't be shy, a couple of dollars would still make me happy! :)
 
 == Installation ==
 
