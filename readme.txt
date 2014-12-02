@@ -3,19 +3,21 @@ Contributors: piccart
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VUF3KP7YFAVZG
 Tags: listing, recent posts, taxonomy, post type, widget
 Requires at least: 3.2
-Tested up to: 4.0
-Stable tag: 1.0
+Tested up to: 4.0.1
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Widget that allow to list XX posts of any active post-type, filtering by any term of any active custom taxonomy, and display only title or thumbnail and excerpt too.
+Widget that lists XX posts of any active post-type, filtering by any term of any active custom taxonomy. display title, or thumb and excerpt too.
 
 == Description ==
 
 This plugin will make a new widget available in the Widgets Section, so you could easily add it in any widgetized area of your theme.
 
-With this widget you will be able to list pages or posts or any other post-type, filtering them by terms of categories, tags and any other active custom taxonomy.
+With this widget you will be able to *list pages or posts or any other post-type*, filtering them by *terms of categories, tags and any other active custom taxonomy*.
 you can also choose to display only title, or to add thumbnails and excerpts!
+
+**"This is the last listing widget plugin you'll ever need to download"**
 
 the main features of the widget are:
 
@@ -30,20 +32,24 @@ the main features of the widget are:
 *   Order Ascendant or Descendant
 *   Choose to display thumbnails
 *   Choose to display excerpts
-*   Exclude specific posts/pages from the listing (inserting their ids)
+*   Exclude specific posts/pages from the listing
 
-Also, the plugin is structured to allow easy overriding of the output template. 
-Just duplicate the file pbytax-template.php that you'll find within the plugin folder, and put it in your theme folder.
+Also, the plugin is structured to allow *easy overriding of the output template*. 
+Just duplicate the file pbytax-template.php that you'll find within the plugin subfolder "templates", and put it in your theme folder.
 
 the widget is built with a very little css styling, in order to adapt perfectly in any theme. though, if you want to style it up, all the html elements have been named with specific classes, to allow easy targetting in your css file.
 
 
+if you'd like me to add a new feature to the widget, please let me know by writing a post in the [support forum](http://wordpress.org/support/plugin/wp-list-pages-by-custom-taxonomy) , and hopefully I will add it to the next version of *WP List Pages by Custom Taxonomy*.
+
+
+If this plugin has been helpful for you, please don't forget to *review* it and consider to [make a donation](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VUF3KP7YFAVZG). Don't be shy, a couple of dollars would still make me happy! :)
 
 == Installation ==
 
 Manual Installation:
 
-1.   Upload the entire "pages-by-custom-tax" folder to the /wp-content/plugins/ directory.
+1.   Upload the entire "wp-list-pages-by-custom-taxonomy" folder to the /wp-content/plugins/ directory.
 2.   Activate the plugin through the 'Plugins' section in WordPress.
 
 Easy wp admin installation:
@@ -70,6 +76,9 @@ if your request could be considered just an additional feature for this plugin, 
 if it's something very specific to your site, I would probably suggest to hire me for a few hours, and I'll develop exactly what you need.
 
 
+for any question and for bug reports, please use the [support forum](http://wordpress.org/support/plugin/wp-list-pages-by-custom-taxonomy)
+
+
 == Screenshots ==
 
 1. Options available in the widget
@@ -77,10 +86,16 @@ if it's something very specific to your site, I would probably suggest to hire m
 
 == Changelog ==
 
+= 1.0.1 =
+* Updated readme.txt
+
 = 1.0 =
 * First version available to public
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+* Updated readme.txt
 
 = 1.0 =
 First version available to public
