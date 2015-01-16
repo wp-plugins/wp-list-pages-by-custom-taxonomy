@@ -42,6 +42,7 @@ the main features of the widget are:
 *   Choose if display Date
 *   Exclude specific posts/pages from the listing
 *   image placeholder if no-thumb is found
+*   Choose to display results into a simple dropdown
 
 Also, the plugin is structured to allow *easy overriding of the output template*. 
 Just duplicate the file pbytax-template.php that you'll find within the plugin subfolder "templates", and put it in your theme folder.
@@ -113,7 +114,7 @@ for any question and for bug reports, please use the [support forum](http://word
 
 == Upgrade Notice ==
 
-= 1.1.0 =
+= 1.2.0 =
 Tested with Wp 4.1
 Added Option to Display Date in frontend
 Added Ordering by Comments,
@@ -121,6 +122,7 @@ Added Ordering by Meta Field (numeric or text),
 Added Option to Filter by Custom Meta Field Value 
 Added Option to set the Thumb width
 Added Option to set the Excerpt length
+Added Option to display posts in a dropdown in frontend
 
 = 1.0.1 =
 Updated readme.txt
