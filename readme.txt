@@ -3,8 +3,8 @@ Contributors: piccart
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VUF3KP7YFAVZG
 Tags: listing, recent posts, taxonomy, post type, widget
 Requires at least: 3.2
-Tested up to: 4.0.1
-Stable tag: 1.0.1
+Tested up to: 4.1
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,14 +95,15 @@ for any question and for bug reports, please use the [support forum](http://word
 
 == Changelog ==
 
-= 1.1.0 =
+= 1.2.0 =
 * Tested with Wp 4.1
-* Added Option to Display Date in frontend
+* Added Option to Display Date in the frontend
 * Added Ordering by Comments
 * Added Ordering by Meta Field (numeric or text)
 * Added Option to Filter by Custom Meta Field Value 
 * Added Option to set the Thumb width
 * Added Option to set the Excerpt length
+* Added Option to display posts in a dropdown in frontend
 
 = 1.0.1 =
 * Updated readme.txt
