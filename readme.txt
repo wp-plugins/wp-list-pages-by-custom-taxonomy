@@ -8,31 +8,40 @@ Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Widget that lists XX posts of any active post-type, filtering by any term of any active custom taxonomy. display title, or thumb and excerpt too.
+Widget to lists posts of any active post-type, filtering by any term of any active custom taxonomy. display title, or thumb, date and excerpt too.
 
 == Description ==
 
-This plugin will make a new widget available in the Widgets Section, so you could easily add it in any widgetized area of your theme.
+This plugin will provide a new widget in the Widgets Section, so you can easily add it in any widgetized area of your theme.
 
-With this widget you will be able to *list pages or posts or any other post-type*, filtering them by *terms of categories, tags and any other active custom taxonomy*.
-you can also choose to display only title, or to add thumbnails and excerpts!
+With this widget you will be able to *list pages or posts or any other post-type*, filtering them by *terms of categories, tags and any other active custom taxonomy*. You can add filtering by *Custom Meta Field* value, and decide how to order the list.
+You can also choose to display only *Title*, or to add *Thumbnails*, *Excerpts* and *Date*!
+
+Its scope is very similar to the default *Recent Posts* widget, but you'll have tons of options and you can use it for any post-type and taxonomy.
+
+Now you can also set the max width of the thumbnail, and the excerpt length, so the listing can display nicely even on larger widgetized areas.
 
 **"This is the last listing widget plugin you'll ever need to download"**
 
 the main features of the widget are:
 
 *   Decide how many entries to display
-*   Choose which post-type you want to list
-*   Choose which taxonomy will be used as filter
-*   Choose which terms to narrow your list with (or choose "any" term of the selected taxonomy)
+*   Choose which Post-Type you want to list
+*   Choose which Taxonomy will be used as filter
+*   Choose which Terms to narrow your list with (or choose "any" term of the selected taxonomy)
 *   Select multiple terms at once 
 *   Include or exclude children terms of the selected ones
-*   Automatically lists in dropdown selectors, all available post-types, taxonomies and terms, no need to find their slugs or ids
-*   Order by Date, Title or Random
+*   Filter by Custom Meta Fields values (full list of comparison operators)
+*   Automatically lists in dropdown selectors, all available post-types, taxonomies, terms, and meta fields! no need to find their slugs or ids!
+*   Order by Date, Title, Comments, Meta Field, or Random
 *   Order Ascendant or Descendant
-*   Choose to display thumbnails
-*   Choose to display excerpts
+*   Choose if display Thumbnails
+*   Set Thumbnail max width	
+*   Choose if display Excerpts
+*   Set Excerpt lenght (in characters)
+*   Choose if display Date
 *   Exclude specific posts/pages from the listing
+*   image placeholder if no-thumb is found
 
 Also, the plugin is structured to allow *easy overriding of the output template*. 
 Just duplicate the file pbytax-template.php that you'll find within the plugin subfolder "templates", and put it in your theme folder.
@@ -72,7 +81,7 @@ Plugin use:
 
 Yes, I am a freelance web developer and for living I develop bespoke plugins and functionalities of any sort.
 though:
-if your request could be considered just an additional feature for this plugin, I will add it to my to-do list and see if it's possible to implement this feature in the future versions of "WP Pages by Custom Tax".
+if your request could be considered just an additional feature for this plugin, I will add it to my to-do list and see if it's possible to implement this feature in the future versions of "WP List Pages by Custom Taxonomy".
 if it's something very specific to your site, I would probably suggest to hire me for a few hours, and I'll develop exactly what you need.
 
 
@@ -86,6 +95,15 @@ for any question and for bug reports, please use the [support forum](http://word
 
 == Changelog ==
 
+= 1.1.0 =
+* Tested with Wp 4.1
+* Added Option to Display Date in frontend
+* Added Ordering by Comments
+* Added Ordering by Meta Field (numeric or text)
+* Added Option to Filter by Custom Meta Field Value 
+* Added Option to set the Thumb width
+* Added Option to set the Excerpt length
+
 = 1.0.1 =
 * Updated readme.txt
 
@@ -94,8 +112,17 @@ for any question and for bug reports, please use the [support forum](http://word
 
 == Upgrade Notice ==
 
+= 1.1.0 =
+Tested with Wp 4.1
+Added Option to Display Date in frontend
+Added Ordering by Comments,
+Added Ordering by Meta Field (numeric or text),
+Added Option to Filter by Custom Meta Field Value 
+Added Option to set the Thumb width
+Added Option to set the Excerpt length
+
 = 1.0.1 =
-* Updated readme.txt
+Updated readme.txt
 
 = 1.0 =
 First version available to public

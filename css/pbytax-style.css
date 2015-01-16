@@ -1,3 +1,5 @@
+/* FRONTEND DISPLAY STYLES */
+
 ul.pbytax-list {
 	list-style:none;
 	padding-left:0;
@@ -6,16 +8,29 @@ ul.pbytax-list li.pbytax-item {
 	clear:both;	
 	margin-bottom:10px;
 }
-ul.pbytax-list li.pbytax-item .pbytax-thumb {
+li.pbytax-item .pbytax-thumb {
 	float:left;	
 	margin-right:6px;
 }
 
-ul.pbytax-list li.pbytax-item .pbytax-thumb img {
+li.pbytax-item .pbytax-thumb {
 	max-width:60px;
 	max-height:auto;
 }
 
-ul.pbytax-list li.pbytax-item .pbytax-excerpt {
+.pbytax-thumb img.img-full-width {
+	width:100%;
+	max-width:100%;
+	height:auto;
+}
+
+li.pbytax-item .pbytax-excerpt {
 	line-height:1;
 }
+
+li.pbytax-item .pbytax-date {
+	float:right;
+	font-size:0.8em;
+	padding-top:2px;
+}
+

@@ -4,13 +4,36 @@ function displayTermsSelector( taxID, widgetID ){
 			if (selectorID == jQuery(this).attr("id") ) {
 				jQuery( this ).show();
 				this.disabled = false;
-				/*jQuery( this ).prop('disabled', false);*/
 			}
 			else {
 				jQuery( this ).hide();
 				this.disabled = true;
-				/*jQuery( this ).prop('disabled', true);*/
 			}
-		});
+	});
 	
+}
+
+function displayMetaKeysSelector( postType, widgetID ){
+	var selectorID = postType + "-keys-" + widgetID;
+	jQuery( ".meta-keys-selector-"+widgetID ).each(function() {
+			if (selectorID == jQuery(this).attr("id") ) {
+				jQuery( this ).show();
+				this.disabled = false;
+			}
+			else {
+				jQuery( this ).hide();
+				this.disabled = true;
+			}
+			if (postType == "any"){
+				jQuery( this ).hide();
+				this.disabled = true;
+			}
+	});
+	if (postType=="any"){
+		jQuery( ".meta_fields_options" ).hide();
+	}
+	else {
+		jQuery( ".meta_fields_options" ).show();
+	}
+		
 }
