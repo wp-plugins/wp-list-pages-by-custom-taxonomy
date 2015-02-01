@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: WP List Pages by Custom Taxonomy
-Description: Widget that allow to list XX posts of any active post-type, filtering by any term of any active custom taxonomy, and display only title or thumbnail and excerpt too. you can also exclude specific posts by id!
+Description: Widget that allow to list XX posts of any active post-type, filtering by any term of any active custom taxonomy, and display only title or thumbnail, date and excerpt too. you can also exclude specific posts by id, and filter/order by meta fields!
 Author: Andrea Piccart
-Version: 1.2.0
+Version: 1.2.1
 Author URI: http://www.affordable-web-developer.com
 */
 
@@ -92,6 +92,7 @@ class Pages_by_Tax extends WP_Widget {
 		// set defaults
 		$defaults = array (
 			'title' => 'Widget title',
+			'intro' => '',
 			'max_entries' => 10,
 			'filter_post_type' => 'post',
 			'filter_taxonomy' => 'category',
@@ -121,6 +122,10 @@ class Pages_by_Tax extends WP_Widget {
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		</p>
+        <p>
+			<label for="<?php echo $this->get_field_id( 'intro' ); ?>"><?php _e( 'Introduction text/html:' ); ?></label> 
+			<textarea rows="3" class="widefat" id="<?php echo $this->get_field_id( 'intro' ); ?>" name="<?php echo $this->get_field_name( 'intro' ); ?>"><?php echo esc_html( $intro ); ?></textarea>
 		</p>
         <p>
 			<label for="<?php echo $this->get_field_id( 'max_entries' ); ?>"><?php _e( 'Max Entries:' ); ?> </label> 
@@ -160,15 +165,15 @@ class Pages_by_Tax extends WP_Widget {
  	           ?>
            		<select multiple class="widefat terms-selector-<?php echo $this->number; ?>" <?php if($filter_taxonomy!=$tax_name){ echo 'style="display:none" disabled'; } ?> id="<?php echo $tax_name.'-'.$this->number; ?>" name="<?php echo $this->get_field_name( 'filter_term' ); ?>[]" >
             		<option value="any" <?php if(in_array('any', $filter_term) && $filter_taxonomy==$tax_name){ echo "selected"; } ?> >any</option>
-					<?
+					<?php
                     // get the terms of the taxonomy and print them
                     $terms = get_terms( $tax_name );
                     foreach ($terms as $term) {            
                         ?>
                         <option value="<?php echo $term->term_id; ?>" <?php if(in_array($term->term_id, $filter_term) && $filter_taxonomy==$tax_name){ echo "selected"; } ?> ><?php echo $term->name; ?></option>      
-                    <? } ?>
+                    <?php } ?>
                 </select>
-           	<? } ?>
+           	<?php } ?>
 		</p>
         <p>
         	<label for="<?php echo $this->get_field_id( 'order_by' ); ?>"><?php _e( 'Order By:' ); ?> </label>
@@ -263,6 +268,7 @@ class Pages_by_Tax extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
 		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['intro'] = $new_instance['intro']; // we don't sanitize or validate this, so it can contain any html or script
 		$instance['exclude_posts'] = sanitize_title( $new_instance['exclude_posts']); // although we specify to put dashes, we'll sanitize the input to reduce risks
 		// other fields are selectors and number field, so data will always be sanitized
 		$instance['max_entries'] = $new_instance['max_entries'];

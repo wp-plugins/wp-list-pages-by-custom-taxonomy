@@ -6,6 +6,7 @@
 	//// !!! THIS FIRST PART IS TO BUILD UP THE QUERY. DO NOT EDIT IT IF YOU'RE NOT SURE WHAT YOU'RE DOING
 	
 	// store the vars
+	$intro = $instance['intro'];
 	$max_entries = $instance['max_entries'];
 	if ($max_entries=="0"){
 		$max_entries= -1;
@@ -107,13 +108,19 @@
 	$posts = get_posts( $pbytax_args );
 	if (!empty($posts)){
 		
+		// display the introduction text/html ?>
+		<div class="pbytax-intro">
+        	<?php echo $intro; ?>
+		</div>
+        
+        <?php
 		//// if the output should be in a DROPDOWN SELECTOR
 		if ($display_in_dropdown=="yes"){
 			?>
             
             <select class="pbytax-dropdown" id="pbytax-selector" onchange="location = this.options[this.selectedIndex].value;">
             	<option value="#">Browse...</option>
-            	<? // loop the posts
+            	<?php // loop the posts
 				foreach( $posts as $post ) {	
 					?>
             		<option value="<?php echo get_permalink( $post->ID ); ?>">
@@ -123,13 +130,13 @@
 				} ?>
             </select>
             
-        <? //// if this was NORMAL WIDGET rather than dropdown
+        <?php //// if this was NORMAL WIDGET rather than dropdown
 		} 
 		else {
 			?>
             
             <ul class="pbytax-list">                           
-                <? // loop the posts
+                <?php // loop the posts
                 foreach( $posts as $post ) {	
                     ?>
                     
@@ -145,12 +152,12 @@
                                     echo '<img src="'.plugins_url().'/wp-list-pages-by-custom-taxonomy/images/no-thumb.jpg" />'; 
                                 } ?>                          
                             </div>	
-                        <? } ?>
+                        <?php } ?>
                             
                         <a class="pbytax-post-title" href="<?php echo get_permalink( $post->ID ); ?>" title="<?php echo $post->post_title ?>"><?php echo $post->post_title ?></a>              
                         <?php if ($display_date=="yes"){
                             ?>
-                            <span class="pbytax-date"><? echo get_the_date( 'd-m-Y', $post->ID ); ?></span>
+                            <span class="pbytax-date"><?php echo get_the_date( 'd-m-Y', $post->ID ); ?></span>
                         <?php } ?>
                         
                         <?php // display the excerpt if required
@@ -161,7 +168,7 @@
                                 $excerpt = wp_trim_excerpt( strip_tags( strip_shortcodes($post->post_content) ) ); 
                                 $excerpt = substr ( $excerpt, 0, $excerpt_length ); echo $excerpt.' [...]'; ?>                          
                             </div>	
-                        <? } ?>
+                        <?php } ?>
                           
                     </li>                	
                     

@@ -1,5 +1,11 @@
 /* FRONTEND DISPLAY STYLES */
 
+.pbytax-intro { 
+	padding-top: 3px;
+	padding-bottom: 3px;
+	margin-bottom: 3px;
+}
+
 ul.pbytax-list {
 	list-style:none;
 	padding-left:0;

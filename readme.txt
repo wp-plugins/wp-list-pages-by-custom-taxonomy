@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: listing, recent posts, taxonomy, post type, widget
 Requires at least: 3.2
 Tested up to: 4.1
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ This plugin will provide a new widget in the Widgets Section, so you can easily 
 With this widget you will be able to *list pages or posts or any other post-type*, filtering them by *terms of categories, tags and any other active custom taxonomy*. You can add filtering by *Custom Meta Field* value, and decide how to order the list.
 You can also choose to display only *Title*, or to add *Thumbnails*, *Excerpts* and *Date*!
 
-Its scope is very similar to the default *Recent Posts* widget, but you'll have tons of options and you can use it for any post-type and taxonomy.
+Its scope is very similar to the default **Recent Posts widget**, but you'll have tons of options and you can use it for any post-type and taxonomy.
 
 Now you can also set the max width of the thumbnail, and the excerpt length, so the listing can display nicely even on larger widgetized areas.
 
@@ -96,6 +96,10 @@ for any question and for bug reports, please use the [support forum](http://word
 
 == Changelog ==
 
+= 1.2.1 =
+* fixed php conflict when activating in some type of servers
+* New field to add text/html above the list
+
 = 1.2.0 =
 * Tested with Wp 4.1
 * Added Option to Display Date in the frontend
@@ -113,6 +117,10 @@ for any question and for bug reports, please use the [support forum](http://word
 * First version available to public
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+fixed php conflict when activating in some type of servers
+New field to add text/html above the list
 
 = 1.2.0 =
 Tested with Wp 4.1
