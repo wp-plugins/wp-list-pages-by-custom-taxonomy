@@ -43,6 +43,7 @@ the main features of the widget are:
 *   Exclude specific posts/pages from the listing
 *   image placeholder if no-thumb is found
 *   Choose to display results into a simple dropdown
+*   Add text or html above the list
 
 Also, the plugin is structured to allow *easy overriding of the output template*. 
 Just duplicate the file pbytax-template.php that you'll find within the plugin subfolder "templates", and put it in your theme folder.
