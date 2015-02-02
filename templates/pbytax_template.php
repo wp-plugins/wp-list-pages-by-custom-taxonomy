@@ -26,6 +26,7 @@
 	$excerpt_length = $instance['excerpt_length'];
 	$display_date = $instance['display_date'];
 	$display_in_dropdown = $instance['display_in_dropdown'];
+	$dropdown_text = $instance['dropdown_text'];
 	$exclude_posts = $instance['exclude_posts'];
 	if ($exclude_posts!=""){
 		$exclude_posts = explode("-", $exclude_posts);	
@@ -119,7 +120,7 @@
 			?>
             
             <select class="pbytax-dropdown" id="pbytax-selector" onchange="location = this.options[this.selectedIndex].value;">
-            	<option value="#">Browse...</option>
+            	<option value="#"><?php echo $dropdown_text; ?> </option>
             	<?php // loop the posts
 				foreach( $posts as $post ) {	
 					?>

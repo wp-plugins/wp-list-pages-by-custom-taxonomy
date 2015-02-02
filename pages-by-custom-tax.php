@@ -3,7 +3,7 @@
 Plugin Name: WP List Pages by Custom Taxonomy
 Description: Widget that allow to list XX posts of any active post-type, filtering by any term of any active custom taxonomy, and display only title or thumbnail, date and excerpt too. you can also exclude specific posts by id, and filter/order by meta fields!
 Author: Andrea Piccart
-Version: 1.2.1
+Version: 1.2.15
 Author URI: http://www.affordable-web-developer.com
 */
 
@@ -110,6 +110,7 @@ class Pages_by_Tax extends WP_Widget {
 			'excerpt_length' => 50,
 			'display_date' => 'no',
 			'display_in_dropdow' => 'no',
+			'dropdown_text' => 'Browse&#8230;',
 			'exclude_posts' => ''
 			);
 		// if vars are set, override defaults
@@ -199,9 +200,13 @@ class Pages_by_Tax extends WP_Widget {
         	<input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_thumb' ); ?>" <?php if($display_thumb=="yes"){ echo "checked"; } ?> > Display Thumbnail  <span class="float-right-field">Max Width:<input class="small-number" id="<?php echo $this->get_field_id( 'thumb_max_width' ); ?>" name="<?php echo $this->get_field_name( 'thumb_max_width' ); ?>" type="number" value="<?php echo esc_attr( $thumb_max_width ); ?>" step="1" min="10" /> </span>
         <br/>
         	<input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_excerpt' ); ?>" <?php if($display_excerpt=="yes"){ echo "checked"; } ?> > Display Excerpt <span class="float-right-field">Length:<input class="small-number" id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" type="number" value="<?php echo esc_attr( $excerpt_length ); ?>" step="1" min="10" /> </span>
-        <br/>   
+        <br/>
+        </p>
+        <p>   
         	<input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_in_dropdown' ); ?>" <?php if($display_in_dropdown=="yes"){ echo "checked"; } ?> > Display only Titles in a Dropdown Selector   
         <br/>  	
+        	<label for="<?php echo $this->get_field_id( 'dropdown_text' ); ?>"><?php _e( 'Dropdown Text:' ); ?></label> 
+			<input class="widefat" id="<?php echo $this->get_field_id( 'dropdown_text' ); ?>" name="<?php echo $this->get_field_name( 'dropdown_text' ); ?>" type="text" value="<?php echo esc_attr( $dropdown_text ); ?>">
         </p>
         <p>
 			<label for="<?php echo $this->get_field_id( 'exclude_posts' ); ?>"><?php _e( 'Exclude posts:' ); ?></label> 
@@ -288,6 +293,7 @@ class Pages_by_Tax extends WP_Widget {
 		$instance['excerpt_length'] = $new_instance['excerpt_length'];
 		$instance['display_date'] = $new_instance['display_date'];
 		$instance['display_in_dropdown'] = $new_instance['display_in_dropdown'];
+		$instance['dropdown_text'] = strip_tags($new_instance['dropdown_text']); // strip tags to avoid breaking of the dropdown
 
 		return $instance;
 	}
