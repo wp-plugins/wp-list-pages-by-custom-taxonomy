@@ -3,7 +3,7 @@
 Plugin Name: WP List Pages by Custom Taxonomy
 Description: Widget that allow to list XX posts of any active post-type, filtering by any term of any active custom taxonomy, and display only title or thumbnail, date and excerpt too. you can also exclude specific posts by id, and filter/order by meta fields!
 Author: Andrea Piccart
-Version: 1.2.15
+Version: 1.2.2
 Author URI: http://www.affordable-web-developer.com
 */
 
@@ -120,142 +120,149 @@ class Pages_by_Tax extends WP_Widget {
 
 		// print the field for the title and the field for the number of posts to display
 		?>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-		</p>
-        <p>
-			<label for="<?php echo $this->get_field_id( 'intro' ); ?>"><?php _e( 'Introduction text/html:' ); ?></label> 
-			<textarea rows="3" class="widefat" id="<?php echo $this->get_field_id( 'intro' ); ?>" name="<?php echo $this->get_field_name( 'intro' ); ?>"><?php echo esc_html( $intro ); ?></textarea>
-		</p>
-        <p>
-			<label for="<?php echo $this->get_field_id( 'max_entries' ); ?>"><?php _e( 'Max Entries:' ); ?> </label> 
-			<input class="widefat" id="<?php echo $this->get_field_id( 'max_entries' ); ?>" name="<?php echo $this->get_field_name( 'max_entries' ); ?>" type="number" value="<?php echo esc_attr( $max_entries ); ?>" step="1" min="0"> (set 0 to list all)
-		</p>
-        <p>
-        	<label for="<?php echo $this->get_field_id( 'filter_post_type' ); ?>"><?php _e( 'Post Type:' ); ?> </label>
-            <select class="widefat" id="<?php echo $this->get_field_id( 'filter_post_type' ); ?>" name="<?php echo $this->get_field_name( 'filter_post_type' ); ?>">
-            	<option value="any" <?php if($filter_post_type=="any"){ echo "selected"; } ?> onclick="displayMetaKeysSelector('any', '<?php echo $this->number; ?>')" >any</option>
-				<?php // get all registered post types and print them excluding the useless default ones
-                $post_types_list =  get_post_types( '', 'names' ); 
-                foreach ($post_types_list as $post_type_name){	
-                    if ($post_type_name!='attachment' && $post_type_name!='revision' && $post_type_name!='nav_menu_item'){
-                        ?>
-                        <option value="<?php echo $post_type_name; ?>" <?php if($post_type_name==$filter_post_type){ echo "selected"; } ?> onclick="displayMetaKeysSelector('<?php echo $post_type_name; ?>', '<?php echo $this->number; ?>')" ><?php echo $post_type_name; ?></option>
-                    <?php
-                    }
+        <div class="pbytax-settings">
+            <p>
+                <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+                <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+            </p>
+            <p>
+                <label for="<?php echo $this->get_field_id( 'intro' ); ?>"><?php _e( 'Introduction text/html:' ); ?></label> 
+                <textarea rows="3" class="widefat" id="<?php echo $this->get_field_id( 'intro' ); ?>" name="<?php echo $this->get_field_name( 'intro' ); ?>"><?php echo esc_html( $intro ); ?></textarea>
+            </p>
+            <p>
+                <label for="<?php echo $this->get_field_id( 'max_entries' ); ?>"><?php _e( 'Max Entries:' ); ?> </label> 
+                <input class="widefat" id="<?php echo $this->get_field_id( 'max_entries' ); ?>" name="<?php echo $this->get_field_name( 'max_entries' ); ?>" type="number" value="<?php echo esc_attr( $max_entries ); ?>" step="1" min="0"> (set 0 to list all)
+            </p>
+            <p>
+                <label for="<?php echo $this->get_field_id( 'filter_post_type' ); ?>"><?php _e( 'Post Type:' ); ?> </label>
+                <select class="widefat" id="<?php echo $this->get_field_id( 'filter_post_type' ); ?>" name="<?php echo $this->get_field_name( 'filter_post_type' ); ?>" onchange="displayMetaKeysSelector(this.value, '<?php echo $this->number; ?>')">
+                    <option value="any" <?php if($filter_post_type=="any"){ echo "selected"; } ?> >any</option>
+                    <?php // get all registered post types and print them excluding the useless default ones
+                    $post_types_list =  get_post_types( '', 'names' ); 
+                    foreach ($post_types_list as $post_type_name){	
+                        if ($post_type_name!='attachment' && $post_type_name!='revision' && $post_type_name!='nav_menu_item'){
+                            ?>
+                            <option value="<?php echo $post_type_name; ?>" <?php if($post_type_name==$filter_post_type){ echo "selected"; } ?> ><?php echo $post_type_name; ?></option>
+                        <?php
+                        }
+                    } ?>
+                </select>       
+            </p>
+            <p>
+                <label for="<?php echo $this->get_field_id( 'filter_taxonomy' ); ?>"><?php _e( 'Taxonomy:' ); ?> </label>
+                <select class="widefat tax-selector" id="<?php echo $this->get_field_id( 'filter_taxonomy' ); ?>" name="<?php echo $this->get_field_name( 'filter_taxonomy' ); ?>" onchange="displayTermsSelector(this.value, '<?php echo $this->number; ?>')">
+                <option value="any_tax" <?php if($filter_taxonomy=="any_tax"){ echo "selected"; } ?> ><?php _e( 'any' ); ?></option>
+                
+                <?php // get all registered taxonomies and print them
+                $taxonomies_list = get_taxonomies();
+                foreach ($taxonomies_list as $tax_name){			
+                    ?>
+                    <option value="<?php echo $tax_name; ?>" <?php if($tax_name==$filter_taxonomy){ echo "selected"; } ?> ><?php echo $tax_name; ?></option>
+                <?php 
                 } ?>
-            </select>       
-        </p>
-        <p>
-        	<label for="<?php echo $this->get_field_id( 'filter_taxonomy' ); ?>"><?php _e( 'Taxonomy:' ); ?> </label>
-            <select class="widefat tax-selector" id="<?php echo $this->get_field_id( 'filter_taxonomy' ); ?>" name="<?php echo $this->get_field_name( 'filter_taxonomy' ); ?>">
-            <?php // get all registered taxonomies and print them
-			$taxonomies_list = get_taxonomies();
-			foreach ($taxonomies_list as $tax_name){			
-				?>
-            	<option value="<?php echo $tax_name; ?>" <?php if($tax_name==$filter_taxonomy){ echo "selected"; } ?> onclick="displayTermsSelector('<?php echo $tax_name; ?>', '<?php echo $this->number; ?>')" ><?php echo $tax_name; ?></option>
-            <?php 
-			} ?>
-            </select>
-            
-            <label for="<?php echo $this->get_field_id( 'filter_term' ); ?>"><?php _e( 'Pull from this Term:' ); ?> </label>
-            
-            <?php // build a selector for each taxonomy, listing the terms. jquery will then display the correct one based on selected taxonomy
-			foreach ($taxonomies_list as $tax_name){
- 	           ?>
-           		<select multiple class="widefat terms-selector-<?php echo $this->number; ?>" <?php if($filter_taxonomy!=$tax_name){ echo 'style="display:none" disabled'; } ?> id="<?php echo $tax_name.'-'.$this->number; ?>" name="<?php echo $this->get_field_name( 'filter_term' ); ?>[]" >
-            		<option value="any" <?php if(in_array('any', $filter_term) && $filter_taxonomy==$tax_name){ echo "selected"; } ?> >any</option>
-					<?php
-                    // get the terms of the taxonomy and print them
-                    $terms = get_terms( $tax_name );
-                    foreach ($terms as $term) {            
-                        ?>
-                        <option value="<?php echo $term->term_id; ?>" <?php if(in_array($term->term_id, $filter_term) && $filter_taxonomy==$tax_name){ echo "selected"; } ?> ><?php echo $term->name; ?></option>      
-                    <?php } ?>
                 </select>
-           	<?php } ?>
-		</p>
-        <p>
-        	<label for="<?php echo $this->get_field_id( 'order_by' ); ?>"><?php _e( 'Order By:' ); ?> </label>
-        	<select class="widefat" id="<?php echo $this->get_field_id( 'order_by' ); ?>" name="<?php echo $this->get_field_name( 'order_by' ); ?>">
-            	<option value="date" <?php if($order_by=="date"){ echo "selected"; } ?> >Date</option>
-                <option value="title" <?php if($order_by=="title"){ echo "selected"; } ?> >Title</option>
-                <option value="comment_count" <?php if($order_by=="comment_count"){ echo "selected"; } ?> >Comments</option>
-        		<option value="rand" <?php if($order_by=="rand"){ echo "selected"; } ?> >Random</option>
-                <option value="meta_value" <?php if($order_by=="meta_value"){ echo "selected"; } ?> >Meta Field (need to set Meta Key Name)</option>
-            </select>
-
-        	<label for="<?php echo $this->get_field_id( 'order_style' ); ?>"><?php _e( 'Order:' ); ?> </label>
-        	<select class="widefat" id="<?php echo $this->get_field_id( 'order_style' ); ?>" name="<?php echo $this->get_field_name( 'order_style' ); ?>">
-            	<option value="ASC" <?php if($order_style=="ASC"){ echo "selected"; } ?> >Ascendant</option>
-                <option value="DESC" <?php if($order_style=="DESC"){ echo "selected"; } ?> >Descendant</option>
-            </select>
-        </p>
-        <p>
-        	<input type="checkbox" class="checkbox-margin" value="true" name="<?php echo $this->get_field_name( 'include_children' ); ?>" <?php if($include_children=="true"){ echo "checked"; } ?> > Include Children
-		<br/>
-        	<input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_date' ); ?>" <?php if($display_date=="yes"){ echo "checked"; } ?> > Display Date
-        <br/>
-        	<input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_thumb' ); ?>" <?php if($display_thumb=="yes"){ echo "checked"; } ?> > Display Thumbnail  <span class="float-right-field">Max Width:<input class="small-number" id="<?php echo $this->get_field_id( 'thumb_max_width' ); ?>" name="<?php echo $this->get_field_name( 'thumb_max_width' ); ?>" type="number" value="<?php echo esc_attr( $thumb_max_width ); ?>" step="1" min="10" /> </span>
-        <br/>
-        	<input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_excerpt' ); ?>" <?php if($display_excerpt=="yes"){ echo "checked"; } ?> > Display Excerpt <span class="float-right-field">Length:<input class="small-number" id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" type="number" value="<?php echo esc_attr( $excerpt_length ); ?>" step="1" min="10" /> </span>
-        <br/>
-        </p>
-        <p>   
-        	<input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_in_dropdown' ); ?>" <?php if($display_in_dropdown=="yes"){ echo "checked"; } ?> > Display only Titles in a Dropdown Selector   
-        <br/>  	
-        	<label for="<?php echo $this->get_field_id( 'dropdown_text' ); ?>"><?php _e( 'Dropdown Text:' ); ?></label> 
-			<input class="widefat" id="<?php echo $this->get_field_id( 'dropdown_text' ); ?>" name="<?php echo $this->get_field_name( 'dropdown_text' ); ?>" type="text" value="<?php echo esc_attr( $dropdown_text ); ?>">
-        </p>
-        <p>
-			<label for="<?php echo $this->get_field_id( 'exclude_posts' ); ?>"><?php _e( 'Exclude posts:' ); ?></label> 
-			<input class="widefat" id="<?php echo $this->get_field_id( 'exclude_posts' ); ?>" name="<?php echo $this->get_field_name( 'exclude_posts' ); ?>" type="text" value="<?php echo $exclude_posts; ?>"><br/> (insert ids separated by a medium dash - or a space)
-		</p>
-        <div class="meta_fields_options" <?php if ($filter_post_type=="any"){ echo 'style="display:none"'; } ?> >
-        	<p>
-            CUSTOM META FIELDS OPTIONS <br/>
-                <label for="<?php echo $this->get_field_id( 'meta_key_name' ); ?>"><?php _e( 'Meta Field Name:' ); ?> </label>
-                <?php // foreach post_type (retrieved previously) print a selector with the meta-keys
-                foreach ($post_types_list as $post_type_name){	
-                    if ($post_type_name!='attachment' && $post_type_name!='revision' && $post_type_name!='nav_menu_item'){
-                        // get all custom meta keys for this post type
-                        $meta_keys_list = $this->pbytax_get_post_type_meta_keys($post_type_name);
-                        ?>
-                        <select class="widefat meta-keys-selector-<?php echo $this->number; ?>" id="<?php echo $post_type_name.'-keys-'.$this->number; ?>" name="<?php echo $this->get_field_name( 'meta_key_name' ); ?>" <?php if($filter_post_type!=$post_type_name){ echo 'style="display:none" disabled'; } ?>>
-                            <option value="none" <?php if($meta_key_name=="none"){ echo "selected"; } ?> >none</option>
-                            <?php // foreach meta key, print an option
-                            foreach ($meta_keys_list as $meta_key){
-                                ?>
-                                <option value="<?php echo $meta_key; ?>" <?php if($post_type_name==$filter_post_type && $meta_key_name==$meta_key){ echo "selected"; } ?> ><?php echo $meta_key; ?></option>
-                            <?php 
-                            } ?>
-                        </select>       
-                    <?php
-                    }
-                } ?>
-                <br/>
-                <label for="<?php echo $this->get_field_id( 'meta_key_value' ); ?>"><?php _e( 'Meta field Value (leave blank to not filter by meta field):' ); ?></label> 
-				<input class="widefat" id="<?php echo $this->get_field_id( 'meta_key_value' ); ?>" name="<?php echo $this->get_field_name( 'meta_key_value' ); ?>" type="text" value="<?php echo $meta_key_value; ?>">
-                <br/>
-                <label for="<?php echo $this->get_field_id( 'meta_compare' ); ?>"><?php _e( 'Meta Compare:' ); ?> </label>
-                <select class="widefat" id="<?php echo $this->get_field_id( 'meta_compare' ); ?>" name="<?php echo $this->get_field_name( 'meta_compare' ); ?>">
-                    <option value="=" <?php if($meta_compare=="="){ echo "selected"; } ?> >=</option>
-                    <option value="!=" <?php if($meta_compare=="!="){ echo "selected"; } ?> > &ne;</option>
-                    <option value=">=" <?php if($meta_compare==">="){ echo "selected"; } ?> > &gt;=</option>
-                    <option value="<=" <?php if($meta_compare=="<="){ echo "selected"; } ?> > &lt;=</option>
-                    <option value=">" <?php if($meta_compare==">"){ echo "selected"; } ?> > &gt;</option>
-                    <option value="<" <?php if($meta_compare=="<"){ echo "selected"; } ?> > &lt;</option>
-                    <option value="LIKE" <?php if($meta_compare=="LIKE"){ echo "selected"; } ?> > LIKE</option>
-                    <option value="NOT LIKE" <?php if($meta_compare=="NOT LIKE"){ echo "selected"; } ?> > NOT LIKE</option>
-                    <option value="IN" <?php if($meta_compare=="IN"){ echo "selected"; } ?> > IN</option>
-                    <option value="NOT IN" <?php if($meta_compare=="NOT IN"){ echo "selected"; } ?> > NOT IN</option>
+                
+                <label for="<?php echo $this->get_field_id( 'filter_term' ); ?>"><?php _e( 'Pull from this Term:' ); ?> </label>
+                
+                <select multiple class="widefat terms-selector-<?php echo $this->number; ?>" <?php if($filter_taxonomy!="any_tax"){ echo 'style="display:none" disabled'; } ?> id="<?php echo 'any_tax-'.$this->number; ?>" name="<?php echo $this->get_field_name( 'filter_term' ); ?>[]" >
+                        <option value="any" <?php if(in_array('any', $filter_term) && $filter_taxonomy=="any_tax"){ echo "selected"; } ?> ><?php _e( 'any' ); ?></option>
                 </select>
-                <br/>
-                <input style="padding-top:4px;" type="checkbox" value="yes" name="<?php echo $this->get_field_name( 'meta_is_number' ); ?>" <?php if($meta_is_number=="yes"){ echo "checked"; } ?> > Numeric Meta Field
-			</p>
-       	</div>
-
+                
+                <?php // build a selector for each taxonomy, listing the terms. jquery will then display the correct one based on selected taxonomy
+                foreach ($taxonomies_list as $tax_name){
+                   ?>
+                    <select multiple class="widefat terms-selector-<?php echo $this->number; ?>" <?php if($filter_taxonomy!=$tax_name){ echo 'style="display:none" disabled'; } ?> id="<?php echo $tax_name.'-'.$this->number; ?>" name="<?php echo $this->get_field_name( 'filter_term' ); ?>[]" >
+                        <option value="any" <?php if(in_array('any', $filter_term) && $filter_taxonomy==$tax_name){ echo "selected"; } ?> >any</option>
+                        <?php
+                        // get the terms of the taxonomy and print them
+                        $terms = get_terms( $tax_name );
+                        foreach ($terms as $term) {            
+                            ?>
+                            <option value="<?php echo $term->term_id; ?>" <?php if(in_array($term->term_id, $filter_term) && $filter_taxonomy==$tax_name){ echo "selected"; } ?> ><?php echo $term->name; ?></option>      
+                        <?php } ?>
+                    </select>
+                <?php } ?>
+            </p>
+            <p>
+                <label for="<?php echo $this->get_field_id( 'order_by' ); ?>"><?php _e( 'Order By:' ); ?> </label>
+                <select class="widefat" id="<?php echo $this->get_field_id( 'order_by' ); ?>" name="<?php echo $this->get_field_name( 'order_by' ); ?>">
+                    <option value="date" <?php if($order_by=="date"){ echo "selected"; } ?> >Date</option>
+                    <option value="title" <?php if($order_by=="title"){ echo "selected"; } ?> >Title</option>
+                    <option value="comment_count" <?php if($order_by=="comment_count"){ echo "selected"; } ?> >Comments</option>
+                    <option value="rand" <?php if($order_by=="rand"){ echo "selected"; } ?> >Random</option>
+                    <option value="meta_value" <?php if($order_by=="meta_value"){ echo "selected"; } ?> >Meta Field (need to set Meta Key Name)</option>
+                </select>
+    
+                <label for="<?php echo $this->get_field_id( 'order_style' ); ?>"><?php _e( 'Order:' ); ?> </label>
+                <select class="widefat" id="<?php echo $this->get_field_id( 'order_style' ); ?>" name="<?php echo $this->get_field_name( 'order_style' ); ?>">
+                    <option value="ASC" <?php if($order_style=="ASC"){ echo "selected"; } ?> >Ascendant</option>
+                    <option value="DESC" <?php if($order_style=="DESC"){ echo "selected"; } ?> >Descendant</option>
+                </select>
+            </p>
+            <p>
+                <input type="checkbox" class="checkbox-margin" value="true" name="<?php echo $this->get_field_name( 'include_children' ); ?>" <?php if($include_children=="true"){ echo "checked"; } ?> > Include Children
+            <br/>
+                <input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_date' ); ?>" <?php if($display_date=="yes"){ echo "checked"; } ?> > Display Date
+            <br/>
+                <input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_thumb' ); ?>" <?php if($display_thumb=="yes"){ echo "checked"; } ?> > Display Thumbnail  <span class="float-right-field">Max Width:<input class="small-number" id="<?php echo $this->get_field_id( 'thumb_max_width' ); ?>" name="<?php echo $this->get_field_name( 'thumb_max_width' ); ?>" type="number" value="<?php echo esc_attr( $thumb_max_width ); ?>" step="1" min="10" /> </span>
+            <br/>
+                <input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_excerpt' ); ?>" <?php if($display_excerpt=="yes"){ echo "checked"; } ?> > Display Excerpt <span class="float-right-field">Length:<input class="small-number" id="<?php echo $this->get_field_id( 'excerpt_length' ); ?>" name="<?php echo $this->get_field_name( 'excerpt_length' ); ?>" type="number" value="<?php echo esc_attr( $excerpt_length ); ?>" step="1" min="10" /> </span>
+            <br/>
+            </p>
+            <p>   
+                <input type="checkbox" class="checkbox-margin" value="yes" name="<?php echo $this->get_field_name( 'display_in_dropdown' ); ?>" <?php if($display_in_dropdown=="yes"){ echo "checked"; } ?> > Display only Titles in a Dropdown Selector   
+            <br/>  	
+                <label for="<?php echo $this->get_field_id( 'dropdown_text' ); ?>"><?php _e( 'Dropdown Text:' ); ?></label> 
+                <input class="widefat" id="<?php echo $this->get_field_id( 'dropdown_text' ); ?>" name="<?php echo $this->get_field_name( 'dropdown_text' ); ?>" type="text" value="<?php echo esc_attr( $dropdown_text ); ?>">
+            </p>
+            <p>
+                <label for="<?php echo $this->get_field_id( 'exclude_posts' ); ?>"><?php _e( 'Exclude posts:' ); ?></label> 
+                <input class="widefat" id="<?php echo $this->get_field_id( 'exclude_posts' ); ?>" name="<?php echo $this->get_field_name( 'exclude_posts' ); ?>" type="text" value="<?php echo $exclude_posts; ?>"><br/> (insert ids separated by a medium dash - or a space)
+            </p>
+            <div class="meta_fields_options" <?php if ($filter_post_type=="any"){ echo 'style="display:none"'; } ?> >
+                <p>
+                CUSTOM META FIELDS OPTIONS <br/>
+                    <label for="<?php echo $this->get_field_id( 'meta_key_name' ); ?>"><?php _e( 'Meta Field Name:' ); ?> </label>
+                    <?php // foreach post_type (retrieved previously) print a selector with the meta-keys
+                    foreach ($post_types_list as $post_type_name){	
+                        if ($post_type_name!='attachment' && $post_type_name!='revision' && $post_type_name!='nav_menu_item'){
+                            // get all custom meta keys for this post type
+                            $meta_keys_list = $this->pbytax_get_post_type_meta_keys($post_type_name);
+                            ?>
+                            <select class="widefat meta-keys-selector-<?php echo $this->number; ?>" id="<?php echo $post_type_name.'-keys-'.$this->number; ?>" name="<?php echo $this->get_field_name( 'meta_key_name' ); ?>" <?php if($filter_post_type!=$post_type_name){ echo 'style="display:none" disabled'; } ?>>
+                                <option value="none" <?php if($meta_key_name=="none"){ echo "selected"; } ?> >none</option>
+                                <?php // foreach meta key, print an option
+                                foreach ($meta_keys_list as $meta_key){
+                                    ?>
+                                    <option value="<?php echo $meta_key; ?>" <?php if($post_type_name==$filter_post_type && $meta_key_name==$meta_key){ echo "selected"; } ?> ><?php echo $meta_key; ?></option>
+                                <?php 
+                                } ?>
+                            </select>       
+                        <?php
+                        }
+                    } ?>
+                    <br/>
+                    <label for="<?php echo $this->get_field_id( 'meta_key_value' ); ?>"><?php _e( 'Meta field Value (leave blank to not filter by meta field):' ); ?></label> 
+                    <input class="widefat" id="<?php echo $this->get_field_id( 'meta_key_value' ); ?>" name="<?php echo $this->get_field_name( 'meta_key_value' ); ?>" type="text" value="<?php echo $meta_key_value; ?>">
+                    <br/>
+                    <label for="<?php echo $this->get_field_id( 'meta_compare' ); ?>"><?php _e( 'Meta Compare:' ); ?> </label>
+                    <select class="widefat" id="<?php echo $this->get_field_id( 'meta_compare' ); ?>" name="<?php echo $this->get_field_name( 'meta_compare' ); ?>">
+                        <option value="=" <?php if($meta_compare=="="){ echo "selected"; } ?> >=</option>
+                        <option value="!=" <?php if($meta_compare=="!="){ echo "selected"; } ?> > &ne;</option>
+                        <option value=">=" <?php if($meta_compare==">="){ echo "selected"; } ?> > &gt;=</option>
+                        <option value="<=" <?php if($meta_compare=="<="){ echo "selected"; } ?> > &lt;=</option>
+                        <option value=">" <?php if($meta_compare==">"){ echo "selected"; } ?> > &gt;</option>
+                        <option value="<" <?php if($meta_compare=="<"){ echo "selected"; } ?> > &lt;</option>
+                        <option value="LIKE" <?php if($meta_compare=="LIKE"){ echo "selected"; } ?> > LIKE</option>
+                        <option value="NOT LIKE" <?php if($meta_compare=="NOT LIKE"){ echo "selected"; } ?> > NOT LIKE</option>
+                        <option value="IN" <?php if($meta_compare=="IN"){ echo "selected"; } ?> > IN</option>
+                        <option value="NOT IN" <?php if($meta_compare=="NOT IN"){ echo "selected"; } ?> > NOT IN</option>
+                    </select>
+                    <br/>
+                    <input style="padding-top:4px;" type="checkbox" value="yes" name="<?php echo $this->get_field_name( 'meta_is_number' ); ?>" <?php if($meta_is_number=="yes"){ echo "checked"; } ?> > Numeric Meta Field
+                </p>
+            </div>
+		</div>
         
 		<?php 
 	}
@@ -315,7 +322,22 @@ class Pages_by_Tax extends WP_Widget {
 			AND $wpdb->postmeta.meta_key NOT RegExp '(^[_0-9].+$)' 
 			AND $wpdb->postmeta.meta_key NOT RegExp '(^[0-9]+$)'
 		";
+		// the query was cutting off all fields starting with an underscore, but we're now keeping them
+		// this was the query part which has been deprecated
+		// AND $wpdb->postmeta.meta_key NOT RegExp '(^[_0-9].+$)'
+		
 		$meta_keys = $wpdb->get_col($wpdb->prepare($query, $post_type));
+		
+		// as there are many duplicated metas starting with a low dash, we'll filter them out.
+		foreach ($meta_keys as $index => $meta_key){
+			if ( substr($meta_key,0,1)=="_" ){
+				//check if there is an entry with the same value but without the underscore
+				if ( in_array( substr($meta_key, 1), $meta_keys) ) {
+					unset($meta_keys[$index]);	
+				}
+			}
+		}
+
 
 		return $meta_keys;
 	

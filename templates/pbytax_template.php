@@ -80,27 +80,29 @@
 
 		}
 	}
-	// if "any" term is selected, we have to retrieve a list of terms ids for the selected taxonomy
-	if ($filter_term_id=="any"){
-		$filter_term_id = get_terms( $taxonomy, array('fields' => 'ids'	) );
+	// if taxonomy is set to any, skip all the below
+	if ($taxonomy!="any_tax"){
+		// if "any" term is selected, we have to retrieve a list of terms ids for the selected taxonomy
+		if ($filter_term_id=="any"){
+			$filter_term_id = get_terms( $taxonomy, array('fields' => 'ids'	) );
+		}
+		// add the taxonomy query to the args
+		$pbytax_args['tax_query'] = array( 
+			 array(
+				'taxonomy' => $taxonomy, 
+				'field' => 'id', 
+				'terms' => $filter_term_id, 				
+				'operator' => 'IN' 
+				)
+			);
+		// add children inclusion to the tax query
+		if ($include_children=="true"){
+			$pbytax_args['tax_query'][0]['include_children'] = true;
+		}
+		else {
+			$pbytax_args['tax_query'][0]['include_children'] = false;
+		}
 	}
-	// add the taxonomy query to the args
-	$pbytax_args['tax_query'] = array( 
-		 array(
-			'taxonomy' => $taxonomy, 
-			'field' => 'id', 
-			'terms' => $filter_term_id, 				
-			'operator' => 'IN' 
-			)
-		);
-	// add children inclusion to the tax query
-	if ($include_children=="true"){
-		$pbytax_args['tax_query'][0]['include_children'] = true;
-	}
-	else {
-		$pbytax_args['tax_query'][0]['include_children'] = false;
-	}
-
 	
 	//// THE LOOP STARTS HERE,
 	// HERE YOU COULD EDIT THE HTML STRUCTURE OF THE OUTPUT

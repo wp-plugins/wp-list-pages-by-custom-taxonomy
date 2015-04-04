@@ -1,6 +1,6 @@
 function displayTermsSelector( taxID, widgetID ){
 	var selectorID = taxID + "-" + widgetID;
-	jQuery( ".terms-selector-"+widgetID ).each(function() {
+	jQuery( ".pbytax-settings .terms-selector-"+widgetID ).each(function() {
 			if (selectorID == jQuery(this).attr("id") ) {
 				jQuery( this ).show();
 				this.disabled = false;
@@ -15,7 +15,7 @@ function displayTermsSelector( taxID, widgetID ){
 
 function displayMetaKeysSelector( postType, widgetID ){
 	var selectorID = postType + "-keys-" + widgetID;
-	jQuery( ".meta-keys-selector-"+widgetID ).each(function() {
+	jQuery( ".pbytax-settings .meta-keys-selector-"+widgetID ).each(function() {
 			if (selectorID == jQuery(this).attr("id") ) {
 				jQuery( this ).show();
 				this.disabled = false;
@@ -30,10 +30,10 @@ function displayMetaKeysSelector( postType, widgetID ){
 			}
 	});
 	if (postType=="any"){
-		jQuery( ".meta_fields_options" ).hide();
+		jQuery( ".pbytax-settings .meta_fields_options" ).hide();
 	}
 	else {
-		jQuery( ".meta_fields_options" ).show();
+		jQuery( ".pbytax-settings .meta_fields_options" ).show();
 	}
 		
 }

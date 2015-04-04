@@ -1,14 +1,14 @@
 /* ADMIN FORM STYLE TWEAKS */
-input[type="number"].small-number {
+.pbytax-settings input[type="number"].small-number {
 	width:60px;
 	padding:0 4px;
 }
 
-input[type="checkbox"].checkbox-margin {
+.pbytax-settings input[type="checkbox"].checkbox-margin {
 	margin:4px 0;
 }
 
-span.float-right-field {
+.pbytax-settings span.float-right-field {
 	float:right;
 	clear:right;
 }

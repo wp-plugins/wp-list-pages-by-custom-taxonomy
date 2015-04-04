@@ -97,6 +97,15 @@ for any question and for bug reports, please use the [support forum](http://word
 
 == Changelog ==
 
+= 1.2.2 =
+* FIXED BUG on Chrome that was blocking the update of the terms when selecting the taxonomy in the settings
+* option to select any as taxonomy
+* wrapped the widget settings in a div
+* meta fields starting with underscore are now listed
+
+= 1.2.15 =
+* Added option to insert first word for the frontend titles selector dropdown
+
 = 1.2.1 =
 * fixed php conflict when activating in some type of servers
 * New field to add text/html above the list
@@ -118,6 +127,15 @@ for any question and for bug reports, please use the [support forum](http://word
 * First version available to public
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+FIXED BUG on Chrome that was blocking the update of the terms when selecting the taxonomy in the settings
+option to select any as taxonomy
+wrapped the widget settings in a div, to better target the js and css for the admin
+meta fields starting with underscore are now listed
+
+= 1.2.15 =
+Added option to insert first word for the frontend titles selector dropdown
 
 = 1.2.1 =
 fixed php conflict when activating in some type of servers
